@@ -16,3 +16,45 @@
 | :------: | :------------: | :--------------------------------------------------------: |
 |   POST   | /user/register | 验证用户名是否被注册或者密码和确认密码相同或验证码是否相同 |
 
+### 3. 所有发布的帖子
+
+请求方式    |   请求路径    |  实现功能
+------------|---------------|--------------------
+get         |/post_article  |查看所有已发布的帖子
+
+
+### 4. 某用户发布的所有帖子
+
+请求方式    |            请求路径       |  实现功能
+------------|---------------------------|--------------------------
+get         |u/{user_id}/post_article/  |用户查看自己发布的所有帖子
+
+
+### 5. 发帖（Table name="post_article"）
+
+字段名         |  数据类型      |  长度 |  主键  |  外键           |  可空    | 说明 
+---------------|----------------|-------|--------|-----------------|----------|----------------------
+article_id     | bigint unsigned|       | yes    |                 | not null | 帖子唯一标识;实现自增。 
+author_name    | varchar        | 20    |        | user(user_name) | not null | 发帖者用户名 
+title          | text           |       |        |                 | not null | 帖子标题
+create_time    | datetime       |       |        |                 | not null | 发布时间
+article_contnet| longtext       |       |        |                 | not null | 帖子内容
+
+
+请求方式    |            请求路径     |  实现功能
+------------|-------------------------|-------
+post        |u/{user_id}/post_article |发帖
+
+sql建表语句
+
+
+```
+create table post_article (	
+	article_id bigint unsigned not null auto_increment primary key,	
+    author_name varchar(20) not null comment '发帖者用户名',   
+    title  text not null comment '帖子标题',
+	create_time datetime not null default current_timestamp comment '发布时间',
+	article_contnet longtext not null comment '帖子内容',
+    foreign key(author_name) references user(user_name)
+) comment '发帖表';
+
