@@ -39,7 +39,7 @@ get         |u/{user_id}/post_article/  |用户查看自己发布的所有帖子
 字段名         |  数据类型      |  长度 |  主键  |  外键           |  可空    | 说明 
 ---------------|----------------|-------|--------|-----------------|----------|----------------------
 article_id     | bigint unsigned|       | yes    |                 | not null | 帖子唯一标识;实现自增。 
-author_name    | varchar        | 20    |        | user(user_name) | not null | 发帖者用户名 
+author_id      | int            |       |        | user(user_id)   | not null | 发帖者用户名 
 title          | text           |       |        |                 | not null | 帖子标题
 create_time    | datetime       |       |        |                 | not null | 发布时间
 article_contnet| longtext       |       |        |                 | not null | 帖子内容
@@ -50,18 +50,19 @@ comment_size   | integer        |       |        |                 |          | 
 ------------|-------------------------|-------
 post        |u/{user_id}/post_article |发帖
 
+
+Ps:不使用外键，为了便于理解此处我写了外键
 sql建表语句
 
 
 ```
 create table post_article (
-	article_id bigint unsigned not null auto_increment primary key,
-    author_id varchar(20) not null comment '发帖者id',
+    article_id bigint unsigned not null auto_increment primary key,	
+    author_id int not null comment '发帖者id',   
     title  text not null comment '帖子标题',
-	create_time datetime notu null default current_timestamp comment '发布时间',
+	create_time datetime not null default current_timestamp comment '发布时间',
 	article_content longtext not null comment '帖子内容',
-	comment_size integer defalt null comment '评论数';
-    foreign key(author_id) references user(user_id)
+	comment_size integer default null comment '评论数'
 ) comment '发帖表';
 ```
 ### 4. 帖子详情
@@ -75,12 +76,32 @@ get         |u/{user_id}/post_article/{article_id} |查看帖子详细内容
 字段名         |  数据类型      |  长度 |  主键  |            外键          |   可空    | 说明 
 ---------------|----------------|-------|--------|--------------------------|-----------|----------------------
 id             | bigint unsigned|       |  yes   |                          | not null  |主键，自定生成,自增
-article_id     | bigint unsigned|       |        |  post_article(article_id)| not null  | 评论所在文章的id
-user_id        | bigint unsigned|       |        |  user(user_id)           | not null  | 评论的用户的id
-pid            | bigint unsigned|       |        |                          | not null  | 评论的父id
-reply_user_id  | bigint unsigned|       |        |  user(user_id)           |     null  | 被回复人的id
+article_id     | int            |       |        |  post_article(article_id)| not null  | 评论所在文章的id
+user_id        | int            |       |        |  user(user_id)           | not null  | 评论的用户的id
+pid            | int            |       |        |  user(user_id)           | not null  | 评论的父id
+reply_user_id  | int            |       |        |  user(user_id)           |     null  | 被回复人的id
 create_time    | datetime       |       |        |                          | not null  | 创建时间，自动生成
 article_comment| longtext       |       |        |                          | not null  | 评论内容，限制500个字符
 
+
+
+pid：评论的父id，注意A评论下的所有子评论，我这里都设计为他的儿子，而不是儿子，孙子，曾孙。即，回复的回复，回复的回复的回复的pid都是某个一级评论。这样设计，主要是为了二级显示和避免太多递归（多级显示太麻烦了，/(ㄒoㄒ)/~~）
+
+reply_user_id：被回复人的id，用于@对方时候显示。对一级评论进行评论不需要@他，所以reply_user_id为空，
+对回复回复需要@对方，否则不知道回复谁。
+
+
+如图，柯南的评论属于一级评论，有楼层号显示。小兰回复柯南，灰原哀回复小兰，琴酒回复灰原哀。小兰、灰原哀、琴酒的 pid 都是柯南的 id，而柯南的 pid 为 0。
+
+```
+create table reply_article (
+	id bigint unsigned not null auto_increment primary key,
+	article_id int not null comment '评论所在文章的id',
+    user_id int not null comment '评论的用户的id',
+    pid int not null comment '评论的父id',
+    reply_user_id int not null comment '被回复人的id', 
+	create_time datetime not null default current_timestamp comment '发布时间',
+	article_comment longtext not null comment '评论内容，限制500个字符'
+) comment '回帖表';
 
 
