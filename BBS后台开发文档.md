@@ -1,4 +1,6 @@
-## BBS论坛后台开发文档
+# BBS论坛后台开发文档
+
+## 登陆 & 注册 & 个人资料修改
 
 ### 1. 登陆
 
@@ -16,21 +18,23 @@
 | :------: | :------------: | :--------------------------------------------------------: |
 |   POST   | /user/register | 验证用户名是否被注册或者密码和确认密码相同或验证码是否相同 |
 
-### 3. 所有发布的帖子
+## 查看所有帖子 & 查看某用户发布的所有帖子 & 发帖 & 帖子详情 & 回帖及评论
+
+### 1. 所有发布的帖子
 
 请求方式    |   请求路径    |  实现功能
 ------------|---------------|--------------------
 get         |/post_article  |查看所有已发布的帖子
 
 
-### 4. 某用户发布的所有帖子
+### 2. 某用户发布的所有帖子
 
 请求方式    |            请求路径       |  实现功能
 ------------|---------------------------|--------------------------
 get         |u/{user_id}/post_article/  |用户查看自己发布的所有帖子
 
 
-### 5. 发帖（Table name="post_article"）
+### 3. 发帖（Table name="post_article"）
 
 字段名         |  数据类型      |  长度 |  主键  |  外键           |  可空    | 说明 
 ---------------|----------------|-------|--------|-----------------|----------|----------------------
@@ -39,6 +43,7 @@ author_name    | varchar        | 20    |        | user(user_name) | not null | 
 title          | text           |       |        |                 | not null | 帖子标题
 create_time    | datetime       |       |        |                 | not null | 发布时间
 article_contnet| longtext       |       |        |                 | not null | 帖子内容
+comment_size   | integer        |       |        |                 |          | 评论数
 
 
 请求方式    |            请求路径     |  实现功能
@@ -49,12 +54,33 @@ sql建表语句
 
 
 ```
-create table post_article (	
-	article_id bigint unsigned not null auto_increment primary key,	
-    author_name varchar(20) not null comment '发帖者用户名',   
+create table post_article (
+	article_id bigint unsigned not null auto_increment primary key,
+    author_id varchar(20) not null comment '发帖者id',
     title  text not null comment '帖子标题',
-	create_time datetime not null default current_timestamp comment '发布时间',
-	article_contnet longtext not null comment '帖子内容',
-    foreign key(author_name) references user(user_name)
+	create_time datetime notu null default current_timestamp comment '发布时间',
+	article_content longtext not null comment '帖子内容',
+	comment_size integer defalt null comment '评论数';
+    foreign key(author_id) references user(user_id)
 ) comment '发帖表';
+```
+### 4. 帖子详情
+
+请求方式    |            请求路径                  |  实现功能
+------------|--------------------------------------|-------
+get         |u/{user_id}/post_article/{article_id} |查看帖子详细内容
+
+### 5. 回帖及评论（Table name="reply_article"）
+
+字段名         |  数据类型      |  长度 |  主键  |            外键          |   可空    | 说明 
+---------------|----------------|-------|--------|--------------------------|-----------|----------------------
+id             | bigint unsigned|       |  yes   |                          | not null  |主键，自定生成,自增
+article_id     | bigint unsigned|       |        |  post_article(article_id)| not null  | 评论所在文章的id
+user_id        | bigint unsigned|       |        |  user(user_id)           | not null  | 评论的用户的id
+pid            | bigint unsigned|       |        |                          | not null  | 评论的父id
+reply_user_id  | bigint unsigned|       |        |  user(user_id)           |     null  | 被回复人的id
+create_time    | datetime       |       |        |                          | not null  | 创建时间，自动生成
+article_comment| longtext       |       |        |                          | not null  | 评论内容，限制500个字符
+
+
 
