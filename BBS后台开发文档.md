@@ -51,7 +51,7 @@ comment_size   | integer        |       |        |                 |          | 
 post        |u/{user_id}/post_article |发帖
 
 
-Ps:不使用外键，为了便于理解此处我写了外键
+Ps:不使用外键，为了便于理解此处我写了外键  
 sql建表语句
 
 
