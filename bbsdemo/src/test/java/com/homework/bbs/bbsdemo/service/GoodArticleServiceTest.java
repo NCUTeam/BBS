@@ -1,5 +1,6 @@
 package com.homework.bbs.bbsdemo.service;
 
+import com.homework.bbs.bbsdemo.entity.GoodArticle;
 import com.homework.bbs.bbsdemo.entity.PostArticle;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,38 +14,30 @@ import javax.transaction.Transactional;
 
 import static org.junit.Assert.*;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class PostArticleServiceTest {
+public class GoodArticleServiceTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private PostArticleService service;
-
+    private GoodArticleService goodArticleService;
 
     @Test
-    public void findAll() {
-        logger.debug(service.findAll().toString());
+    public void addGoodArticle() {
+        GoodArticle goodArticle = new GoodArticle();
+        goodArticle.setArticleId(1);
+        goodArticle.setUserId(3);
+        goodArticleService.addGoodArticle(goodArticle);
     }
 
     @Test
-    public void postArticles() {
-        PostArticle postArticle = new PostArticle();
-        postArticle.setAuthorId(2);
-        postArticle.setTitle("Title,Title");
-        postArticle.setArticleContent("ContentContent");
-        service.PostArticles(postArticle);
+    public void findByUserId() {
+        logger.debug(goodArticleService.findByUserId(3).toString());
     }
 
     @Test
-    public void findByAuthorId() {
-        logger.debug(service.findByAuthorId(1).toString());
-    }
-
-    @Test
-    public void deletePostArticle() {
-        service.deletePostArticle(1);
+    public void deleteGoodArticle() {
+        goodArticleService.deleteGoodArticle(1);
     }
 }

@@ -22,7 +22,6 @@ public class ReplyArticleServiceTest {
 
     @Autowired
     private ReplyArticleService service;
-    private ReplyArticle replyArticle;
 
     @Test
     public void removeReplyArticle() {

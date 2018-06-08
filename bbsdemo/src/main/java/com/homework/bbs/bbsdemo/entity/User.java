@@ -10,16 +10,40 @@ import java.math.BigInteger;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger userId;
+    private BigInteger user_id;
 
     private String username;
+    private String password;
+    private String gender;
+    private String email;
+    private BigInteger phone;
+    private String address;
+    private String work;
+    private String introduce;
+    private String interests;
 
-    public BigInteger getUserId() {
-        return userId;
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", gender='" + gender + '\'' +
+                ", email='" + email + '\'' +
+                ", phone=" + phone +
+                ", address='" + address + '\'' +
+                ", work='" + work + '\'' +
+                ", introduce='" + introduce + '\'' +
+                ", interest='" + interests + '\'' +
+                '}';
     }
 
-    public void setUserId(BigInteger userId) {
-        this.userId = userId;
+    public BigInteger getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(BigInteger user_id) {
+        this.user_id = user_id;
     }
 
     public String getUsername() {
@@ -30,11 +54,67 @@ public class User {
         this.username = username;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                '}';
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public BigInteger getPhone() {
+        return phone;
+    }
+
+    public void setPhone(BigInteger phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getWork() {
+        return work;
+    }
+
+    public void setWork(String work) {
+        this.work = work;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getInterest() {
+        return interests;
+    }
+
+    public void setInterest(String interest) {
+        this.interests = interest;
     }
 }

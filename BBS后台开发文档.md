@@ -132,7 +132,6 @@ data:{
     pid:可为空，默认为0,为一级评论  
     replyUserId:可为空，默认为null，也是一级评论的特点  
     articleComment:  
-    
 }
 
 ### 7. 查看当前文章所有回帖及评论
@@ -165,3 +164,51 @@ create table reply_article (
 	article_comment longtext not null comment '评论内容，限制500个字符'
 ) comment '回帖表';
 ```
+## 精华帖（Table name="good_article"）
+
+字段名          |  数据类型     |  长度  |  主键  |   可空    | 说明 
+---------------|--------------|-------|-------|-----------|----------------------
+good_id        | int unsigned |  20   | yes   |  not null | 精华帖唯一标识;实现自增。 
+article_id     | int          |       |       |  not null | 文章id 
+user_id        | int          |       |       |  not null | 添加精华帖的用户id，判断是普通用户还是管理员
+
+```
+create table good_article (
+    good_id int(20) unsigned not null auto_increment primary key,
+    article_id int not null comment '文章id',
+    user_id  int not null comment '添加精华帖的用户id'
+) comment '精华帖表';
+```
+### 1. 添加精华帖/我的收藏
+
+请求方式     |    请求路径    |  实现功能
+------------|---------------|------------
+post        |/good_article  |添加精华帖/我的收藏
+
+data:{  
+    articleId:  
+    userId:  
+}
+
+### 2. 查看精华帖/我的收藏
+
+请求方式  |          请求路径            |  实现功能
+---------|-----------------------------|------------
+get      |/user/{user_id}/good_article  |查看精华帖/我的收藏
+
+### 3. 删除精华帖/我的收藏
+
+请求方式  |          请求路径        |  实现功能
+---------|-------------------------|------------
+delete   |/good_article/{good_id}  |删除精华帖/我的收藏
+
+
+
+
+
+
+
+
+
+
+
