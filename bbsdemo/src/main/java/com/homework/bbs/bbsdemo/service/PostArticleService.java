@@ -42,6 +42,15 @@ public class PostArticleService {
         return ResultUtil.success(postArticleDao.findByArticleId(articleId));
     }
 
+
+    /*根据分类查询帖子列表*/
+    public Result<PostArticle> findByCategoryId(int categoryId){
+        if(postArticleDao.existsByCategoryId(categoryId)==false){
+            return ResultUtil.error(1,"类别不存在");
+        }
+        return ResultUtil.success(postArticleDao.findByCategoryId(categoryId));
+    }
+
     /*删除帖子*/
     public Result<PostArticle> deletePostArticle(Integer articleId){
         if(postArticleDao.existsById(articleId)==false){

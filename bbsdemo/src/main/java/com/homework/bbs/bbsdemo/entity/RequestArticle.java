@@ -1,25 +1,22 @@
 package com.homework.bbs.bbsdemo.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.util.List;
-/*
-* 发帖实体
-* */
-@Entity
-@Table(name = "post_article")
-public class PostArticle {
 
+/*
+ * 需求帖实体
+ * */
+@Entity
+@Table(name = "request_article")
+public class RequestArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "article_id")
-    private Integer articleId;   //帖子标识
+    @Column(name = "request_id")
+    private Integer requestId;   //帖子标识
 
     private Integer authorId ;      //作者id
 
@@ -41,12 +38,12 @@ public class PostArticle {
     private Integer categoryId;//类别id
 
 
-    public Integer getArticleId() {
-        return articleId;
+    public Integer getRequestId() {
+        return requestId;
     }
 
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
+    public void setRequestId(Integer requestId) {
+        this.requestId = requestId;
     }
 
     public Integer getAuthorId() {
@@ -91,8 +88,8 @@ public class PostArticle {
 
     @Override
     public String toString() {
-        return "PostArticle{" +
-                "articleId=" + articleId +
+        return "RequestArticle{" +
+                "requestId=" + requestId +
                 ", authorId=" + authorId +
                 ", title='" + title + '\'' +
                 ", createTime=" + createTime +

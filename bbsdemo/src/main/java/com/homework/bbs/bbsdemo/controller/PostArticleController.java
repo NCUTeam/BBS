@@ -52,6 +52,11 @@ public class PostArticleController {
       return service.findByAuthorId(authorId);
     }
 
+    /*根据分类查询帖子列表*/
+    @GetMapping(value = "/post_article/categoryId/{categoryId}")
+    public Result<PostArticle> findByCategoryId(@PathVariable("categoryId") Integer categoryId){
+        return service.findByCategoryId(categoryId);
+    }
     /*删除帖子*/
     @DeleteMapping("/post_article")
     @Transactional
