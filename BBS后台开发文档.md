@@ -37,7 +37,26 @@ CREATE TABLE `user` (
 PRIMARY KEY ( `user_id` ) USING BTREE 
 ) ENGINE = INNODB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8;
 ```
+## 查看帖子分类（Table name="category"）
 
+字段名          |  数据类型       |  长度  |  主键   |      外键            |   可空    | 说明 
+---------------|----------------|-------|--------|----------------------|----------|----------------------
+category_id    | int unsigned   |  20   | yes    |                      | not null | 类别唯一标识 
+category_name  | varchar        |  50   |        |                      | not null | 类名
+
+### 查看所有分类
+
+请求方式    |   请求路径    |  实现功能
+------------|---------------|--------------------
+get         |/category      |查看所有分类
+
+sql语句
+```
+create table category (
+    category_id int(20) unsigned not null auto_increment primary key,
+    category_name varchar(50) not null comment '类名'
+) comment '分类表';
+```
 ## 查看所有帖子 & 查看某用户发布的所有帖子 & 发帖 & 帖子详情 & 回帖及评论
 
 ### 1. 所有发布的帖子
@@ -56,14 +75,14 @@ get         |/user/{user_id}/post_article |用户查看自己发布的所有帖�
 
 ### 3. 发帖（Table name="post_article"）
 
-字段名         |  数据类型      |  长度 |  主键  |  外键           |  可空    | 说明 
----------------|----------------|-------|--------|-----------------|----------|----------------------
-article_id     | int unsigned   |  20   | yes    |                 | not null | 帖子唯一标识;实现自增。 
-author_id      | int            |       |        | user(user_id)   | not null | 发帖者用户名 
-title          | text           |       |        |                 | not null | 帖子标题
-create_time    | datetime       |       |        |                 | not null | 发布时间
-article_contnet| longtext       |       |        |                 | not null | 帖子内容
-
+字段名          |  数据类型       |  长度  |  主键   |      外键            |   可空    | 说明 
+---------------|----------------|-------|--------|----------------------|----------|----------------------
+article_id     | int unsigned   |  20   | yes    |                      | not null | 帖子唯一标识;实现自增。 
+author_id      | int            |       |        | user(user_id)        | not null | 发帖者用户名 
+title          | text           |       |        |                      | not null | 帖子标题
+create_time    | datetime       |       |        |                      | not null | 发布时间
+article_contnet| longtext       |       |        |                      | not null | 帖子内容
+category_id    | int            |       |        | category(category_id)| not null | 类别id 
 
 请求方式    |            请求路径     |  实现功能
 ------------|-------------------------|-------
@@ -75,6 +94,7 @@ data:{
     authorId:  
     title:  
     articleContent:  
+    categoryId:  
 }
 
 
@@ -88,13 +108,14 @@ create table post_article (
     author_id int not null comment '发帖者id',
     title  text not null comment '帖子标题',
 	create_time datetime not null default current_timestamp comment '发布时间',
-	article_content longtext not null comment '帖子内容'
+	article_content longtext not null comment '帖子内容',
+	category_id int not null comment '类别id'
 ) comment '发帖表';
 ```
 ### 4. 帖子详情
 
-请求方式    |            请求路径                  |  实现功能
-------------|--------------------------------------|-------
+请求方式     |            请求路径                 |  实现功能
+------------|------------------------------------|-------
 get         |/post_article/articleId/{articleId} |查看帖子详细内容
 
 
@@ -104,12 +125,16 @@ get         |/post_article/articleId/{articleId} |查看帖子详细内容
 ------------|--------------------------------------|-------
 delete        |/post_article?articleId= |删除帖子及相关评论
 
+###  6.根据分类返回帖子列表
+
+请求方式   |             请求路径                  |  实现功能
+----------|--------------------------------------|-------
+get       |/post_article/categoryId/{categoryId} |根据分类查看帖子
 
 
+### 7. 回帖及评论（Table name="reply_article"）
 
-### 6. 回帖及评论（Table name="reply_article"）
-
-字段名         |  数据类型      |  长度 |  主键  |            外键          |   可空    | 说明 
+字段名          |  数据类型       |  长度  |  主键   |            外键          |   可空     | 说明 
 ---------------|----------------|-------|--------|--------------------------|-----------|----------------------
 id             | int unsigned   |   20  |  yes   |                          | not null  |主键，自定生成,自增
 article_id     | int            |       |        |  post_article(article_id)| not null  | 评论所在文章的id
@@ -121,9 +146,9 @@ article_comment| longtext       |       |        |                          | no
 
 
 
-请求方式    |            请求路径     |  实现功能
-------------|-------------------------|-------
-post        |        /comments        |回帖或评论
+请求方式    |           请求路径     |  实现功能
+-----------|-----------------------|-------
+post       |        /comments      |回帖或评论
 
 
 data:{  
@@ -134,7 +159,7 @@ data:{
     articleComment:  
 }
 
-### 7. 查看当前文章所有回帖及评论
+### 8. 查看当前文章所有回帖及评论
 
 
 请求方式    |            请求路径     |  实现功能
@@ -142,7 +167,7 @@ data:{
 get         |  /comments?articleId=   |查看当前文章所有回帖及评论
 
 
-### 8. 删除回帖及相关评论
+### 9. 删除回帖及相关评论
 
 
 请求方式    |            请求路径                    |  实现功能
@@ -164,6 +189,26 @@ create table reply_article (
 	article_comment longtext not null comment '评论内容，限制500个字符'
 ) comment '回帖表';
 ```
+
+## 需求帖（Table name="request_article"）
+> 发帖功能类似，不再多做描述
+把所有的post_article换成request_article即可
+sql语句
+```
+create table requst_article (
+    request_id int(20) unsigned not null auto_increment primary key,
+    author_id int not null comment '发需求帖者id',
+    title  text not null comment '需求帖标题',
+	create_time datetime not null default current_timestamp comment '发布时间',
+	article_content longtext not null comment '需求帖内容',
+	category_id int not null comment '类别id'
+) comment '需求表';
+```
+## 回复需求帖（Table name="reply_request"）
+> 与发帖的回复功能相似，不再多做描述
+把所有的comments换成request_comments
+
+
 ## 精华帖（Table name="good_article"）
 
 字段名          |  数据类型     |  长度  |  主键  |   可空    | 说明 
