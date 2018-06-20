@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>管理员主页</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="renderer" content="webkit">
+    <meta name="baidu-site-verification" content="R9XA5lWxu2" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="css/build.css" th:href="@{/css/build.css}">
+    <link href="css/login.css" th:href="@{/css/login.css}" rel="stylesheet" type="text/css"/>
+    <link href="css/zzsc.css" th:href="@{/css/zzsc.css}" rel="stylesheet" type="text/css"/>
+    <link href="css/dlzc.css" th:href="@{/css/dlzc.css}" rel="stylesheet" type="text/css"/>
+
+    <script  type="text/javascript" src="js/jquery-1.11.1.min.js" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+    <script  type="text/javascript" src="js/main.js" th:src="@{/js/main.js}"></script>
+    <script  type="text/javascript" src="js/popwin.js" th:src="@{/js/popwin.js}"></script>
+    <script language="javascript" type="text/javascript" src="js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+    <script language="javascript" type="text/javascript" src="js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+
+</head>
+<body style="background-color:#f0f4fb;">
+<header id="top" role="banner" class="transition">
+    <!--搜索弹窗 开始-->
+    <div class="box">
+        <div class="box2">
+            <div class="icon icon-search-close js-show-search-box"><a class="close"></a></div>
+            <div class="search-content overlay-dialog-animate">
+                <div class="search-input">
+                    <form role="search" method="get" action="/search" onsubmit="return checkinput()">
+                        <button type="submit"></button>
+                        <input placeholder="请输入关键字" name="s" id="search-input">
+                    </form>
+                </div>
+                <div class="search-history hide" id="history">
+                    <span>我的搜索历史</span>
+                    <ul class="transition" id="history_ul">
+                        <li class="transition"><a href="#">数码</a></li>
+                        <li class="transition"><a href="#">科技</a></li>
+                        <li class="transition"><a href="#">科技</a></li>
+                        <li class="transition"><a href="#">互联网</a></li>
+                        <li class="transition"><a href="#">汽车之家</a></li>
+                    </ul>
+                    <div class="pull-right empty-history js-empty-history">清空历史</div>
+                </div>
+                <div class="search-history search-hot">
+                    <strong>热搜词</strong>
+                    <div class="dh-seach">
+                        <ul>
+                            <a href="#">汽车之家</a>
+                            <a href="#">娱乐新闻</a>
+                            <a href="#">日常生活</a>
+                            <a href="#">心理健康</a>
+                            <a href="#">科技达人</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--搜索弹窗 结束-->
+    <script>
+        function checkinput(){
+            var input = $("#search-input").val();
+            if(input ==  null || input == ''){
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            //  创建测试session，获取session值。
+            // sessionStorage.setItem("name","andy") ;
+            var name1 = sessionStorage.getItem("name");
+            //alert(name1)
+            if(name1!=null){
+                //把登陆注册的div隐藏
+                document.getElementById("login").style.display='none';
+                //显示用户
+                document.getElementById("details").style.display='block';
+                document.getElementById("name").innerText=name1;
+            }
+        }
+    </script>
+
+    <div class="container">
+        <div class="navbar-header transition">
+            <a href="#" title="首页"><img src="images/logo.jpg" alt="网" title="首页" /></a>
+        </div>
+        <ul class="nav navbar-nav navbar-left" id="jsddm">
+            <li class="nav-news js-show-menu">
+                <a href="#">资讯 <span class="caret"></span></a>
+                <ul>
+                    <li><a href="#" target="_blank">汽车之家</a></li>
+                    <li><a href="#" target="_blank">娱乐新闻</a></li>
+                    <li><a href="#" target="_blank">日常生活</a></li>
+                    <li><a href="#" target="_blank">心理健康</a></li>
+                    <li><a href="#" target="_blank">科技达人</a></li>
+                </ul>
+            </li>
+            <style>
+                #jsddm ul{position: absolute; visibility: hidden; background:#fff; width:250px;  top:60px; left:-50px; z-index:9999; box-shadow:0 1px 15px rgba(18,21,21,.2);padding:10px 5px;}
+                #jsddm ul li{ float:left; width:105px; padding-left:20px; line-height:40px;}
+            </style>
+            <li class="nav-news"><a href="/index" target="_blank">首页<span class="nums-prompt nums-prompt-topic"></span></a></li>
+            <li class="nav-news"><a href="/member" target="_blank">个人主页</a></li>
+            <li class="nav-news"><a href="#" target="_blank">好友<span class="nums-prompt"></span></a></li>
+        </ul>
+        <!--注意这里改成div id改成  login-->
+        <div id="login"> <ul class="nav navbar-nav navbar-right transition  xiala main_nav">
+            <li class="app-guide js-app-guide" >
+                <div class="app-guide-box">
+                    <img src="images/weixin.jpg">
+                    <div class="app-guide-title">
+                        <span>微信扫一扫</span><br>
+                        <span>我们聊一聊</span>
+                    </div>
+                </div>
+                <i class="icon icon-sm-phone"></i>加我微信<em class="guide-prompt"></em>
+            </li>
+            <li class="search-li js-show-search-box"><a><i class="icon icon-search "></i></a><span>搜索</span></li>
+
+            <li class="login-link-box"><a href="/userlogin" class="cd-signin">登录</a></li>
+            <li ><a class="cd-signup" href="/userlogin">注册</a></li>
+            <li><a href="/wtiezi" class="cd-tougao">发布帖子</a></li>
+        </ul>
+        </div>
+        <div id="details" style="display: none">
+            <ul class="nav navbar-nav navbar-right transition  xiala main_nav">
+                <li class="app-guide js-app-guide" >
+                    <div class="app-guide-box">
+                        <img src="images/weixin.jpg">
+                        <div class="app-guide-title">
+                            <span>微信扫一扫</span><br>
+                            <span>我们聊一聊</span>
+                        </div>
+                    </div>
+                    <i class="icon icon-sm-phone"></i>加我微信<em class="guide-prompt"></em>
+                </li>
+                <li class="search-li js-show-search-box"><a><i class="icon icon-search "></i></a><span>搜索</span></li>
+
+                <!--把href里添加传递的session-->
+                <li>  <a  id="name" href="/admin"></a></li>
+                <li> <a class="btn" href="/userlogin">注销</a></li>
+                <li><a href="/wtiezi" class="cd-tougao">发布帖子</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="js/d-login.js"></script>
+
+</header>
+<div class="placeholder-height"></div>
+<div class="container per_center_body" id="per_center">
+    <div class="user-info-warp">
+        <div class="user-head-box">
+            <div class="user-face"><img src="images/58_avatar_big.jpg" th:src="@{/images/58_avatar_big.jpg}"></div>
+            <div class="user-name">判官<a href="#" target="_blank"><i class="i-vip icon-vip" title="黑卡会员"></i></a></div>
+            <div class="user-one"><br></div>
+            <div class="user-one user-auth" style="font-family: 'Arial Black'; font-size: 20px">管理员<i class="i-icon icon-auth3" title="认证作者"></i></div>
+            <div class="user-one" style="font-family: 'Arial Black'; font-size: 20px">积分：</div>
+            <!--<a href="javascript:" class="btn btn-messages js-login" uid="1373658" name="判官">管理员</a>-->
+            <div class="admin-btn-warp"></div>
+        </div>
+        <div class="user-info-box">
+            <div class="col-lg-5">
+                <div class="user-info"><i class="icon icon-user-point"></i>公司：旅客App</div>
+                <div class="user-info"><i class="icon icon-user-point"></i>职业：产品个体户</div>
+                <div class="user-info"><i class="icon icon-user-point"></i>邮箱：保密</div>
+            </div>
+            <div class="col-lg-7">
+                <div class="user-info"><i class="icon icon-user-point"></i>微博：http://weibo.com/alexli2011</div>
+                <div class="user-info"><i class="icon icon-user-point"></i>微信：17276694</div>
+                <div class="user-info"><i class="icon icon-user-point"></i>微信公众号：lvkeapp2015</div>
+            </div>
+            <div class="btn-box"><a class="js-sea-more-info more-info pull-right">更多<span class="caret"></span></a></div>
+            <div class="more-user-info-box">
+                <div class="col-lg-5">
+                    <div class="more-user-info"><i class="icon icon-user-point"></i>真实姓名：保密</div>
+                    <div class="more-user-info"><i class="icon icon-user-point"></i>手机：保密</div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="more-user-info"><i class="icon icon-user-point"></i>性别：男</div>
+                    <div class="more-user-info"><i class="icon icon-user-point"></i>所在地址：保密</div>
+                </div>
+                <div style="clear:both; width:100%;">
+                    <div class="more-user-info"><i class="icon icon-user-point"></i>注册时间：2015-06-29</div>
+                </div>
+                <div style="width:100%;">
+                    <div class="more-user-info" style="padding-left:75px;"><span>认证星级：<i class="i-icon2 icon2-stars03"></i></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="menu" name="menu"></div>
+    <div class="user-menu-warp">
+        <div class="menu-warp">
+            <ul id=myTabs1>
+                <!--<li class="active" onMouseDown=Tabs1(this,0);><a href="#menu">所有帖子</a></li>-->
+                <li class="" onMouseDown=Tabs1(this,0);><a href="#menu">所有帖子</a></li>
+                <li class="" onMouseDown=Tabs1(this,1);><a href="#menu">所有用户</a></li>
+                <li class="" onMouseDown=Tabs1(this,2);><a href="#menu" >我感兴趣的分类</a></li>
+                <li class="" onMouseDown=Tabs1(this,3);><a href="#menu" >修改个人资料</a></li>
+            </ul>
+        </div>
+
+
+        <!--修改帖子-->
+        <div class="user-content-warp" style="display:none" id=myTabs1_Content0>
+            <ul class='nav-box' id=myTabs2>
+                <li class="active" onMouseDown=Tabs2(this,0);><a href="#">所有帖子</a></li>
+                <li class="" onMouseDown=Tabs2(this,1)><a href="#">互动广场</a></li>
+                <li class="" onMouseDown=Tabs2(this,2)><a href="#">需求广场</a></li>
+                <li class="" onMouseDown=Tabs2(this,3)><a href="#">精华帖</a></li>
+            </ul>
+
+            <div class="message-box" id=myTabs2_Content0>
+                <div class="message-box" >
+
+                    <div class="mod-b mod-art ">
+                        <div class="mod-angle">置顶</div><!--是否为置顶帖-->
+                        <a class="transition" href="/tieziDetail" target="_blank">
+                            <div class="mod-thumb"><img class="lazy" src="images/ad1.jpg" th:src="@{/images/ad1.jpg}" alt="冷眼看快手、陌陌们的"短视频社交"" style="display: inline;"></div>
+                        </a>
+                        <div class="mob-ctt">
+                            <h3><a href="/tieziDetail" class="transition" target="_blank">1。冷眼看快手、陌陌们的"短视频社交"</a></h3>
+                            <div class="mob-author"><span class="time">2017-05-28</span>
+                                <button class="btn btn-sm">  <i class="icon icon-cmt">&nbsp &nbsp &nbsp &nbsp<em>0</em> </i></button>  <!--评论数-->
+                                <button class="btn btn-sm">  <i class="icon icon-fvr">&nbsp &nbsp &nbsp &nbsp<em>0</em></i></button><!--收藏--></div>
+                            <div class="mob-sub">短视频天然离社交远一点。</div>
+                            <button type="button" class="btn-info btn-sm"> 取消置顶</button>  <!--直接置顶操作-->
+                            &nbsp &nbsp<button class="btn-gray btn-sm">  修改</button><!--点击后跳转到changetiezi.html-->
+                            &nbsp &nbsp <button class="btn-success btn-sm">加精</button><!--点击后加入精华帖-->
+                            &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                        </div>
+                    </div>
+
+                    <div class="mod-b mod-art ">
+                        <a class="transition" href="tieziDetail.html" target="_blank">
+                            <div class="mod-thumb"><img class="lazy" src="images/ad1.jpg" th:src="@{/images/ad1.jpg}" alt="冷眼看快手、陌陌们的"短视频社交"" style="display: inline;"></div>
+                        </a>
+                        <div class="mob-ctt">
+                            <h3><a href="/tieziDetail" class="transition" target="_blank">2。冷眼看快手、陌陌们的"短视频社交"</a></h3>
+                            <div class="mob-author"><span class="time">2017-05-28</span>
+                                <button class="btn btn-sm">  <i class="icon icon-cmt">&nbsp &nbsp &nbsp &nbsp<em>0</em> </i></button>  <!--评论数-->
+                                <button class="btn btn-sm">  <i class="icon icon-fvr">&nbsp &nbsp &nbsp &nbsp<em>0</em></i></button><!--收藏--></div>
+                            <div class="mob-sub">短视频天然离社交远一点。</div>
+                            <button type="button" class="btn-info btn-sm"> 置顶</button>  <!--直接置顶操作-->
+                            &nbsp &nbsp<button class="btn-gray btn-sm">  修改</button><!--点击后跳转-->
+                            &nbsp &nbsp <button class="btn-success btn-sm">加精</button><!--点击后加入精华帖-->
+                            &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="message-box" style="display:none" id=myTabs2_Content1>
+                <div class="mod-b mod-art" data-aid="213665">
+                    <div class="mod-angle">置顶</div><!--<!--是否为置顶帖-->-->
+                    <div class="mod-thumb ">
+                        <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
+                            <img class="lazy" src="sy-img/111527830443.jpg" th:src="@{/images/111527830443.jpg}" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
+                        </a>
+                    </div>
+                    <div class="column-link-box">
+                        <a href="#" class="column-link" target="_blank">娱乐淘金</a><!--类别-->
+                    </div>
+                    <div class="mob-ctt">
+                        <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2><!--标题-->
+                        <div class="mob-author">
+                            <div class="author-face">
+                                <a href="#" target="_blank"><img src="sy-img/59_1502432173.jpg" th:src="@{/sy-img/59_1502432173.jpg}"></a>
+                            </div>
+                            <a href="#" target="_blank">
+                                <span class="author-name ">量子位</span><!--用户名-->
+                            </a>
+                            <a href="#" target="_blank" title="购买VIP会员"></a>
+                            <span class="time">1小时前</span><!--时间-->
+                            &nbsp&nbsp  <button class="btn btn-sm">  <i class="icon icon-cmt">&nbsp &nbsp &nbsp &nbsp<em>0</em> </i></button>  <!--评论数-->
+                        </div>
+                        <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div><!--文章片段-->
+                        <button type="button" class="btn-info btn-sm"> 取消置顶</button>  <!--直接置顶操作-->
+                        &nbsp &nbsp <button class="btn-success btn-sm">加精</button><!--点击后加入精华帖-->
+                        &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+
+                    </div>
+                </div>
+                <div class="mod-b mod-art" data-aid="213665">
+                    <!--<div class="mod-angle">热</div>&lt;!&ndash;是否为精华帖&ndash;&gt;-->
+                    <div class="mod-thumb ">
+                        <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
+                            <img class="lazy" src="sy-img/111527830443.jpg" th:src="@{/images/111527830443.jpg}" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
+                        </a>
+                    </div>
+                    <div class="column-link-box">
+                        <a href="#" class="column-link" target="_blank">娱乐淘金</a><!--类别-->
+                    </div>
+                    <div class="mob-ctt">
+                        <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2><!--标题-->
+                        <div class="mob-author">
+                            <div class="author-face">
+                                <a href="#" target="_blank"><img src="sy-img/59_1502432173.jpg" th:src="@{/sy-img/59_1502432173.jpg}"></a>
+                            </div>
+                            <a href="#" target="_blank">
+                                <span class="author-name ">量子位</span><!--用户名-->
+                            </a>
+                            <a href="#" target="_blank" title="购买VIP会员"></a>
+                            <span class="time">1小时前</span><!--时间-->
+                        </div>
+                        <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div><!--文章片段-->
+                        <button type="button" class="btn-info btn-sm"> 置顶</button>  <!--直接置顶操作-->
+                        &nbsp &nbsp<button class="btn-gray btn-sm">  修改</button><!--点击后跳转-->
+                        &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                    </div>
+                </div>
+            </div>
+                <div class="message-box" style="display:none" id=myTabs2_Content2>
+                    <div class="mod-b mod-art" data-aid="213665">
+                        <div class="mod-angle">置顶</div><!--是否为置顶帖-->
+                        <div class="mod-thumb ">
+                            <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
+                                <img class="lazy" src="sy-img/111527830443.jpg" th:src="@{/images/111527830443.jpg}" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
+                            </a>
+                        </div>
+                        <div class="column-link-box">
+                            <a href="#" class="column-link" target="_blank">娱乐淘金</a><!--类别-->
+                        </div>
+                        <div class="mob-ctt">
+                            <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2><!--标题-->
+                            <div class="mob-author">
+                                <div class="author-face">
+                                    <a href="#" target="_blank"><img src="sy-img/59_1502432173.jpg" th:src="@{/sy-img/59_1502432173.jpg}"></a>
+                                </div>
+                                <a href="#" target="_blank">
+                                    <span class="author-name ">量子位</span><!--用户名-->
+                                </a>
+                                <a href="#" target="_blank" title="购买VIP会员"></a>
+                                <span class="time">1小时前</span><!--时间-->
+                            </div>
+                            <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div><!--文章片段-->
+                            <button type="button" class="btn-info btn-sm"> 取消置顶</button>  <!--直接置顶操作-->
+                            &nbsp &nbsp<button class="btn-gray btn-sm">  修改</button><!--点击后跳转-->
+                            &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                        </div>
+                    </div>
+
+                    <div class="mod-b mod-art" data-aid="213665">
+                        <!--<div class="mod-angle">热</div>&lt;!&ndash;是否为精华帖&ndash;&gt;-->
+                        <div class="mod-thumb ">
+                            <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
+                                <img class="lazy" src="sy-img/111527830443.jpg" th:src="@{/images/111527830443.jpg}" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
+                            </a>
+                        </div>
+                        <div class="column-link-box">
+                            <a href="#" class="column-link" target="_blank">娱乐淘金</a><!--类别-->
+                        </div>
+                        <div class="mob-ctt">
+                            <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2><!--标题-->
+                            <div class="mob-author">
+                                <div class="author-face">
+                                    <a href="#" target="_blank"><img src="sy-img/59_1502432173.jpg" th:src="@{/sy-img/59_1502432173.jpg}"></a>
+                                </div>
+                                <a href="#" target="_blank">
+                                    <span class="author-name ">量子位</span><!--用户名-->
+                                </a>
+                                <a href="#" target="_blank" title="购买VIP会员"></a>
+                                <span class="time">1小时前</span><!--时间-->
+                            </div>
+                            <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div><!--文章片段-->
+                            <button type="button" class="btn-info btn-sm"> 置顶</button>  <!--直接置顶操作-->
+                            &nbsp &nbsp<button class="btn-gray btn-sm">  修改</button><!--点击后跳转-->
+                            &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                        </div>
+                    </div>
+                </div>
+
+            <div class="message-box" style="display:none" id=myTabs2_Content3>
+
+                <div class="mod-b mod-art" data-aid="213665">
+                    <div class="mod-thumb ">
+                        <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
+                            <img class="lazy" src="sy-img/111527830443.jpg" th:src="@{/images/111527830443.jpg}" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
+                        </a>
+                    </div>
+                    <div class="column-link-box">
+                        <a href="#" class="column-link" target="_blank">娱乐淘金</a><!--类别-->
+                    </div>
+                    <div class="mob-ctt">
+                        <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2><!--标题-->
+                        <div class="mob-author">
+                            <div class="author-face">
+                                <a href="#" target="_blank"><img src="sy-img/59_1502432173.jpg" th:src="@{/sy-img/59_1502432173.jpg}"></a>
+                            </div>
+                            <a href="#" target="_blank">
+                                <span class="author-name ">量子位</span><!--用户名-->
+                            </a>
+                            <a href="#" target="_blank" title="购买VIP会员"></a>
+                            <span class="time">1小时前</span><!--时间-->
+
+                        </div>
+                        <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div><!--文章片段-->
+                        &nbsp &nbsp<button class="btn-gray btn-sm">  修改</button><!--点击后跳转-->
+                        &nbsp &nbsp <button class="btn-success btn-sm">取消加精</button><!--点击后取消加入精华帖-->
+                        &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--所有用户-->
+        <div class="user-content-warp" style="display:none" id=myTabs1_Content1>
+
+            <div class="collect-box" data-cid="129416"><span class="collect-title">所有用户</span>
+                <ul>
+                    <li type="recomment">
+                        <div class="message-msg"><img class="lazy" src="images/user.jpg" th:src="@{/images/user.jpg}" alt="用户1"style="display: inline; width: 50px;height: 50px">
+                            &nbsp &nbsp &nbsp &nbsp<span class="me-dp">用户名：</span>
+                            &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <button class="btn-success btn-sm">设为管理员</button>
+                            &nbsp  &nbsp &nbsp&nbsp<button class="btn-info btn-sm">撤销管理员</button>
+                            &nbsp &nbsp &nbsp&nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="user-content-warp" style="display:none" id=myTabs1_Content2>
+            <div class="collect-box" data-cid="129416"><span class="collect-title">我还没有感兴趣的分类</span>
+
+            </div>
+        </div>
+        <div class="user-content-warp" style="display:none" id=myTabs1_Content3>
+            <div class="collect-box" data-cid="129416"><span class="collect-title">个人信息</span></div>
+            <form role="form">
+                <div class="form-group">
+                    <label class="login-label transition">
+                        <label >昵称：</label><input id="login_username" name="username" class="form-control" th:value="${user.username}" >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="login-label transition">
+                        <label >性别：</label><input id="" name="gender" class="form-control" th:value="${user.gender}" >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="login-label transition">
+                        <label >所在地址：</label><input id="login_username" name="address" class="form-control"  th:value="${user.address}">
+                    </label>
+                </div>
+                <div>
+                    <label class="login-label transition">
+                        <label >工作性质：</label><input id="login_username" name="work" class="form-control" th:value="${user.work}" >
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="login-label transition">
+                        <label> 简介：</label><input id="login_username" name="introduce" class="form-control" th:value="${user.introduce}">
+                    </label>
+                </div>
+                <div  class="form-group">
+                    <label>感兴趣的话题：</label></div>
+                <div class="form-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="option1" name="interests" th:checked="${user.interests!=null}?${#strings.contains(user.interests, '音乐')}"> 音乐
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="option2" name="interests" th:checked="${user.interests!=null}?${#strings.contains(user.interests, '影视')}"> 影视
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="option3" name="interests" th:checked="${user.interests!=null}?${#strings.contains(user.interests, '体育')}"> 体育
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox4" value="option3" name="interests" th:checked="${user.interests!=null}?${#strings.contains(user.interests, '其他')}"> 其他
+                    </label>
+                </div>
+                <div><button type="submit" class="btn btn-default">提&nbsp;交</button></div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="modal-backdrop fade in js-modal-backdrop"></div>
+        <div class="container copy-right">
+            <div class="footer-tag-list">
+                <a href="#" target="_blank" class="transition">关于我们</a>
+                <a href="#" target="_blank" class="transition">加入我们</a>
+                <a href="#" target="_blank" class="transition">合作伙伴</a>
+                <a href="#" target="_blank" class="transition">广告及服务</a>
+                <a href="#" target="_blank" class="transition">常见问题解答</a>
+                <a href="#" target="_blank" class="transition">防网络诈骗专题</a>
+            </div>
+            <span>Copyright © <a href="#">虎嗅网</a> <a href="#" target="_blank">京ICP备12013432号-1</a>
+            &nbsp;<a href="#" target="_blank"><i class="i-wj"></i>京公网安备 11010102001402号</a>&nbsp;&nbsp;&nbsp;<em class="bull-right">本站由</em><i class="icon-aliyun" style="width: 70px;background-size: 100%;left: 7px;"></i><em class="bull-em">提供计算与安全服务</em>
+        </span>
+            <div class="footer-icon-list pull-right">
+                <ul class="Qr-codee">
+                    <a><li class="Qr-code-footer">
+                        <div class="app-qrcode"><img src="images/weixin_erweima.png"></div>
+                        <i class="icon icon-footer icon-footer-wx"></i>
+                    </li>
+                    </a>
+                    <a><li class="Qr-code-footer">
+                        <div class="app-qrcode"><img src="images/app_erweima.png"></div>
+                        <i class="icon icon-footer icon-footer-ios"></i>
+                    </li>
+                    </a>
+                    <a><li class="Qr-code-footer">
+                        <div class="app-qrcode"><img src="images/app_erweima.png"></div>
+                        <i class="icon icon-footer icon-footer-android"></i>
+                    </li>
+                    </a>
+                    <a href="#" target="_blank" title="英文版">
+                        <li><i class="icon icon-footer icon-footer-inter"></i></li>
+                    </a>
+                    <a href="#" target="_blank" title="RSS订阅中心">
+                        <li><i class="icon icon-footer icon-footer-rss"></i></li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+        <div id="moquu_wxin" class="moquu_wxin"><a href="javascript:void(0)"><div class="moquu_wxinh"></div></a></div>
+        <div id="moquu_wshare" class="moquu_wshare"><a href="javascript:void(0)"><div class="moquu_wshareh"></div></a></div>
+    </footer>
+    <script language="javascript" type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".more-user-info-box").fadeOut(0);
+            $(".btn-box").click(function() {
+                $(".more-user-info-box").not($(this).next()).slideUp('fast');
+                $(this).next().slideToggle(400);
+            });
+        });
+    </script>
+    <script>
+        $(":checkbox").click(function(){
+            $(this).attr("checked",true);//设置当前选中checkbox的状态为checked
+            $(this).siblings().attr("checked",false); //设置当前选中的checkbox同级(兄弟级)其他checkbox状态为未选中
+        });
+
+    </script>
+    <script type="text/javascript" src="js/mouse.js"></script>
+</body>
+</html>

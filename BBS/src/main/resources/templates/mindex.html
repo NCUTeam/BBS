@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>主页</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+    <meta name="renderer" content="webkit">
+    <meta name="baidu-site-verification" content="R9XA5lWxu2" />
+    <meta name="author" content="虎嗅网">
+    <meta name="keywords" content="科技资讯,商业评论,明星公司,动态,宏观,趋势,创业,精选,有料,干货,有用,细节,内幕">
+    <meta name="description" content="聚合优质的创新信息与人群，捕获精选|深度|犀利的商业科技资讯。在虎嗅，不错过互联网的每个重要时刻。">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="css/build.css" th:href="@{/css/build.css}">
+    <link rel="stylesheet" type="text/css" href="css/activity.css" th:href="@{/css/activity.css}">
+    <link href="css/login.css" th:href="@{/css/login.css}" rel="stylesheet" type="text/css"/>
+    <link href="css/zzsc.css" th:href="@{/css/zzsc.css}" rel="stylesheet" type="text/css"/>
+    <link href="css/dlzc.css" th:href="@{/css/dlzc.css}" rel="stylesheet" type="text/css"/>
+    <script language="javascript" type="text/javascript" src="js/jquery-1.11.1.min.js" th:src="@{/js/jquery-1.11.1.min.js}"></script>
+    <script language="javascript" type="text/javascript" src="js/main.js" th:src="@{/js/main.js}"></script>
+    <script language="javascript" type="text/javascript" src="js/popwin.js" th:src="@{/js/popwin.js}"></script>
+    <script language="javascript" type="text/javascript" src="js/bootstrap.js" th:src="@{/s/bootstrap.js}"></script>
+    <script language="javascript" type="text/javascript" src="js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" type="text/css" href="css/nanoscroller.css" th:href="@{/css/nanoscroller.css}">
+    <!--<link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">-->
+
+
+</head>
+
+<body>
+
+<header id="top" role="banner" class="transition">
+    <!--搜索弹窗 开始-->
+    <div class="box">
+        <div class="box2">
+            <div class="icon icon-search-close js-show-search-box"><a class="close"></a></div>
+            <div class="search-content overlay-dialog-animate">
+                <div class="search-input">
+                    <form role="search" method="get" th:action="@{/post/search}" onsubmit="return checkinput()">
+                        <button type="submit"></button>
+                        <input placeholder="请输入关键字" name="s" id="search-input">
+                    </form>
+                </div>
+                <div class="search-history hide" id="history">
+                    <span>我的搜索历史</span>
+                    <ul class="transition" id="history_ul">
+                        <li class="transition"><a href="#">数码</a></li>
+                        <li class="transition"><a href="#">科技</a></li>
+                        <li class="transition"><a href="#">科技</a></li>
+                        <li class="transition"><a href="#">互联网</a></li>
+                        <li class="transition"><a href="#">汽车之家</a></li>
+                    </ul>
+                    <div class="pull-right empty-history js-empty-history">清空历史</div>
+                </div>
+                <div class="search-history search-hot">
+                    <strong>热搜词</strong>
+                    <ul>
+                        <li class="transition"><a href="#">数码</a></li>
+                        <li class="transition"><a href="#">科技</a></li>
+                        <li class="transition"><a href="#">互联网</a></li>
+                        <li class="transition"><a href="#">汽车之家</a></li>
+                        <li class="transition"><a href="#">Uber</a></li>
+                        <li class="transition"><a href="#">支付宝</a></li>
+                        <li class="transition"><a href="#">大数据</a></li>
+                        <li class="transition"><a href="#">创业</a></li>
+                        <li class="transition"><a href="#">旅游</a></li>
+                        <li class="transition"><a href="#">美团</a></li>
+                        <li class="transition"><a href="#">社交</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--搜索弹窗 结束-->
+    <script>
+        function checkinput(){
+            var input = $("#search-input").val();
+            if(input ==  null || input == ''){
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            //  创建测试session，获取session值。
+            var name1 = sessionStorage.getItem("name");
+            if(name1!=null){
+                // alert(name1);
+                //把登陆注册的div隐藏
+                document.getElementById("login").style.display='none';
+                //显示用户
+                document.getElementById("details").style.display='block';
+                document.getElementById("name").innerText=name1;
+            }
+        }
+    </script>
+
+    <div class="container">
+        <div class="navbar-header transition">
+            <a href="#" title="首页"><img src="images/logo.jpg" alt="虎嗅网" title="首页" /></a>
+        </div>
+        <ul class="nav navbar-nav navbar-left" id="jsddm">
+            <li class="nav-news js-show-menu">
+                <a href="#">热门分类 <span class="caret"></span></a>
+                <ul>
+                    <li><a href="#" target="_blank">电商消费</a></li>
+                    <li><a href="#" target="_blank">娱乐淘金</a></li>
+                    <li><a href="#" target="_blank">雪花一代</a></li>
+                    <li><a href="#" target="_blank">人工智能</a></li>
+                    <li><a href="#" target="_blank">车与出行</a></li>
+                    <li><a href="#" target="_blank">智能终端</a></li>
+                    <li><a href="#" target="_blank">医疗健康</a></li>
+                    <li><a href="#" target="_blank">金融地产</a></li>
+                    <li><a href="#" target="_blank">企业服务</a></li>
+                    <li><a href="#" target="_blank">创业维艰</a></li>
+                    <li><a href="#" target="_blank">社交通讯</a></li>
+                    <li><a href="#" target="_blank">全球热点</a></li>
+                    <li><a href="#" target="_blank">生活腔调</a></li>
+                </ul>
+            </li>
+            <style>
+                #jsddm ul{position: absolute; visibility: hidden; background:#fff; width:250px;  top:60px; left:-50px; z-index:9999; box-shadow:0 1px 15px rgba(18,21,21,.2);padding:10px 5px;}
+                #jsddm ul li{ float:left; width:105px; padding-left:20px; line-height:40px;}
+            </style>
+            <li class="nav-news active"><a href="/mindex" target="_blank">话题广场<span class="nums-prompt nums-prompt-topic"></span></a></li>
+            <li class="nav-news"><a href="/mxqgc" target="_blank">需求广场</a></li>
+            <li class="nav-news"><a href="/mhdgc" target="_blank">互动广场<span class="nums-prompt"></span></a></li>
+            <li class="nav-news"><a href="/mjht" target="_blank">精华帖<em class="nums-prompt"></em></a></li>
+        </ul>
+        <!--注意这里改成div id改成  login-->
+        <div id="login"> <ul class="nav navbar-nav navbar-right transition  xiala main_nav">
+            <li class="app-guide js-app-guide" >
+                <div class="app-guide-box">
+                    <img src="images/weixin.jpg">
+                    <div class="app-guide-title">
+                        <span>微信扫一扫</span><br>
+                        <span>我们聊一聊</span>
+                    </div>
+                </div>
+                <i class="icon icon-sm-phone"></i>加我微信<em class="guide-prompt"></em>
+            </li>
+            <li class="search-li js-show-search-box"><a><i class="icon icon-search "></i></a><span>搜索</span></li>
+
+            <li class="login-link-box"><a href="/userlogin" class="cd-signin">登录</a></li>
+            <li ><a class="cd-signup" href="/userlogin">注册</a></li>
+            <li><a href="/wtiezi" class="cd-tougao">发布帖子</a></li>
+        </ul>
+        </div>
+        <div id="details" style="display: none">
+            <ul class="nav navbar-nav navbar-right transition  xiala main_nav">
+                <li class="app-guide js-app-guide" >
+                    <div class="app-guide-box">
+                        <img src="images/weixin.jpg">
+                        <div class="app-guide-title">
+                            <span>微信扫一扫</span><br>
+                            <span>我们聊一聊</span>
+                        </div>
+                    </div>
+                    <i class="icon icon-sm-phone"></i>加我微信<em class="guide-prompt"></em>
+                </li>
+                <li class="search-li js-show-search-box"><a><i class="icon icon-search "></i></a><span>搜索</span></li>
+
+                <!--把href里添加传递的session-->
+                <li>  <a  id="name" href="/member"></a></li>
+                <li> <a class="btn" href="/userlogin">注销</a></li>
+                <li><a href="/wtiezi" class="cd-tougao">发布帖子</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="cd-user-modal">
+        <div class="cd-user-modal-container">
+        </div>
+    </div>
+
+    <script src="js/d-login.js" th:src="@{/js/d-login.js}"></script>
+
+</header>
+
+
+<div class="placeholder-height"></div>
+<div class="container" id="index">  <!--可以改为公告栏-->
+    <div class="wrap-left pull-left">
+        <div class="big-pic-box">
+            <div class="big-pic">
+                <a href="#" target="_blank" class="transition" title="醒醒吧，腾讯、网易称霸的游戏行业，谁都没机会成为第三">
+                    <div class="back-img"><img src="sy-img/061708387437.jpg"  alt="醒醒吧，腾讯、网易称霸的游戏行业，谁都没机会成为第三"></div>
+                    <div class="big-pic-content">
+                        <h1 class="t-h1">醒醒吧，腾讯、网易称霸的游戏行业，谁都没机会成为第三</h1>
+                    </div>
+                </a>
+            </div>
+            <div class="big2-pic big2-pic-index big2-pic-index-top">
+                <a href="#" class="back-img transition" target="_blank" title="嘘！Facebook 正在上海悄悄寻找办公室">
+                    <img class="lazy" src="sy-img/142618969973.jpg" alt="嘘！Facebook 正在上海悄悄寻找办公室">
+                </a>
+                <a href="#" target="_blank" title="嘘！Facebook 正在上海悄悄寻找办公室">
+                    <div class="big2-pic-content">
+                        <h2 class="t-h1">嘘！Facebook 正在上海悄悄寻找办公室</h2>
+                    </div>
+                </a>
+            </div>
+            <div class="big2-pic big2-pic-index big2-pic-index-bottom">
+                <a href="#" class="back-img transition" target="_blank" title="马云在人生最艰难时去了延安，在革命根据地决定建立淘宝">
+                    <img class="lazy" src="sy-img/093433055013.jpg" alt="马云在人生最艰难时去了延安，在革命根据地决定建立淘宝">
+                </a>
+                <a href="#" target="_blank" 马云在人生最艰难时去了延安，在革命根据地决定建立淘宝>
+                    <div class="big2-pic-content">
+                        <h2 class="t-h1">马云在人生最艰难时去了延安，在革命根据地决定建立淘宝</h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="mod-info-flow">
+
+            <div class="mod-b mod-art" data-aid="213665">
+                <div class="mod-angle">置顶</div><!--是否为置顶帖-->
+                <div class="mod-thumb ">
+                    <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
+                        <img class="lazy" src="sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
+                    </a>
+                </div>
+                <div class="column-link-box">
+                    <a href="#" class="column-link" target="_blank">娱乐淘金</a><!--类别-->
+                </div>
+                <div class="mob-ctt">
+                    <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2><!--标题-->
+                    <div class="mob-author">
+                        <div class="author-face">
+                            <a href="#" target="_blank"><img src="sy-img/59_1502432173.jpg"></a>
+                        </div>
+                        <a href="#" target="_blank">
+                            <span class="author-name ">量子位</span><!--用户名-->
+                        </a>
+                        <a href="#" target="_blank" title="购买VIP会员"></a>
+                        <span class="time">1小时前</span><!--时间-->
+
+                    </div>
+                    <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div><!--文章片段-->
+                    <button type="button" class="btn-info btn-sm"> 取消置顶</button>  <!--直接置顶操作-->
+                    &nbsp &nbsp<button class="btn-gray btn-sm">  修改</button><!--点击后跳转-->
+                    &nbsp &nbsp <button class="btn-success btn-sm">加精</button><!--点击后加入精华帖-->
+                    &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                </div>
+            </div>
+            <div class="mod-b mod-art mod-b-push ">
+                <a class="transition" href="#" target="_blank" title="弯道超车的大业，怎么能靠政策呢？">
+                    <div class="mod-thumb ">
+                        <img class="lazy" src="sy-img/104239030071.jpg" alt="弯道超车的大业，怎么能靠政策呢？">
+                    </div>
+                </a>
+                <div class="column-link-box column-link-big-box">
+                    <a href="#" class="column-link" target="_blank">车与出行</a>
+                </div>
+                <div class="mob-ctt">
+                    <h2><a href="#" class="transition msubstr-row5" target="_blank">弯道超车的大业，怎么能靠政策呢？</a></h2>
+                    <div class="mob-author">
+                        <div class="author-face">
+                            <a href="#" target="_blank"><img class="lazy" src="sy-img/default.jpg"></a>
+                        </div>
+                        <a href="#" target="_blank">
+                            <span class="author-name">autocarweekly</span>
+                        </a>
+                        <a href="#" target="_blank"></a>
+                        <span class="time">5小时前</span>
+                    </div>
+                    <div class="mob-sub">希望变失望、机会变门槛、黄金变铁皮
+                        <button type="button" class="btn-info btn-sm"> 置顶</button>  <!--直接置顶操作-->
+                        &nbsp &nbsp<button class="btn-gray btn-sm">  修改</button><!--点击后跳转-->
+                        &nbsp &nbsp <button class="btn-success btn-sm">加精</button><!--点击后加入精华帖-->
+                        &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                    </div>
+                </div>
+            </div>
+            <div class="mod-b mod-art promote">
+                <a href="#" target="_blank" title="">
+                    <div class="mod-thumb">
+                        <img class="lazy" src="sy-img/233950517521.jpg">
+                    </div>
+                </a>
+                <div class="mob-ctt">
+                    <a href="#" target="_blank">实体商业转型</a>
+                    <span class="point">&bull;</span>
+                    <a href="#" target="_blank">实体空间在召唤，他们押宝了零售业态转型升级</a>
+                    <span class="span-mark-pro">推广</span>
+                </div>
+            </div>
+            <div class="mod-b mod-art" data-aid="213665">
+                <!--<div class="mod-angle">热</div>&lt;!&ndash;是否为精华帖&ndash;&gt;-->
+                <div class="mod-thumb ">
+                    <a class="transition" title="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低" href="#" target="_blank">
+                        <img class="lazy" src="sy-img/111527830443.jpg" alt="你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低">
+                    </a>
+                </div>
+                <div class="column-link-box">
+                    <a href="#" class="column-link" target="_blank">娱乐淘金</a><!--类别-->
+                </div>
+                <div class="mob-ctt">
+                    <h2><a href="#" class="transition msubstr-row2" target="_blank">你的公司够前沿吗？至少在AI这件事上，多数企业都眼高手低</a></h2><!--标题-->
+                    <div class="mob-author">
+                        <div class="author-face">
+                            <a href="#" target="_blank"><img src="sy-img/59_1502432173.jpg"></a>
+                        </div>
+                        <a href="#" target="_blank">
+                            <span class="author-name ">量子位</span><!--用户名-->
+                        </a>
+                        <a href="#" target="_blank" title="购买VIP会员"></a>
+                        <span class="time">1小时前</span><!--时间-->
+                    </div>
+                    <div class="mob-sub">公司纷纷看好人工智能技术潜力的同时，真正应用在自己业务中的并不算多</div><!--文章片段-->
+                    <button type="button" class="btn-info btn-sm"> 置顶</button>  <!--直接置顶操作-->
+                    &nbsp &nbsp<button class="btn-gray btn-sm">  修改</button><!--点击后跳转-->
+                    &nbsp &nbsp <button class="btn-success btn-sm">加精</button><!--点击后加入精华帖-->
+                    &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="get-mod-more js-get-mod-more-list transition" data-cur_page="1" data-last_dateline="1504655833">
+            点击加载更多
+        </div>
+    </div>
+    <!--右侧导航栏-->
+    <div class="wrap-right pull-right">
+        <div class="right-ad-box"></div>
+
+        <link rel="stylesheet" type="text/css" href="https://static.huxiucdn.com/www/css/moment.css">
+        <div id="moment"></div>
+        <!--热帖部分-->
+        <div class="box-moder moder-story-list">
+            <h3>最新热帖</h3>
+            <span class="pull-right project-more story-more"><a href="#" class="transition index-24-right js-index-24-right" target="_blank">查看全部</a></span>
+            <span class="span-mark"></span>
+            <div class="story-box-warp hour-box-warp">
+                <div class="nano">
+                    <div class="overthrow nano-content description" tabindex="0">
+                        <ul class="box-list mt-box-list">
+                            <!--公共24小时列表部分-->
+
+
+                            <li>
+                                <div class="story-content">
+                                    <div class="mt-story-title js-story-title" story-data-show="true">
+                                        <p class="transition hour-arrow">
+                                            <span class="icon icon-caret js-mt-index-icon"></span>
+                                        </p>
+                                        <ul class="hour-head">
+                                            <li><img class="hour-tx" src="sy-img/touxiang.jpg" alt="头像"><!--头像--></li>
+                                            <li>
+                                                <p>果然黑</p><!--用户名-->
+                                                <p>3分钟前</p><!--时间-->
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-index-info-parent">
+                                        <div class="story-info mt-story-info">
+                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">
+                                                #苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。 <a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
+                                            </p><!--内容-->
+                                            &nbsp &nbsp <button class="btn-success btn-sm">加精</button><!--点击后加入精华帖-->
+                                            &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                                            <div class="mt-index-end">
+                                                <div class="mt-index-realend">...</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+
+                            <li>
+                                <div class="story-content">
+                                    <div class="mt-story-title js-story-title" story-data-show="true">
+                                        <p class="transition hour-arrow">
+                                            <span class="icon icon-caret js-mt-index-icon"></span>
+                                        </p>
+                                        <ul class="hour-head">
+                                            <li><img class="hour-tx" src="sy-img/touxiang.jpg" alt="头像"> <!--头像--></li>
+                                            <li>
+                                                <p>果然黑</p><!--用户名-->
+                                                <p>3分钟前</p><!--时间-->
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-index-info-parent">
+                                        <div class="story-info mt-story-info">
+                                            <p class="story-detail-hide hour-detail-hide mt-index-cont mt-index-cont2 js-mt-index-cont2">
+                                                #苹果至少要等到2019年才能摆脱对三星的依赖#  作为苹果现有LCD显示屏长期的供货商，LG Display可做到2019年实现OLED显示屏的全面发货，明年年底可以实现少量的发货。目前，LG与苹果就一些协商预付款的细节问题讨论到最后阶段。 <a href="#" target="_blank" class="mt-index-cont2-a">[&nbsp原文&nbsp]</a>
+                                            </p><!--内容-->
+                                            &nbsp &nbsp <button class="btn-success btn-sm">加精</button><!--点击后加入精华帖-->
+                                            &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                                            <div class="mt-index-end">
+                                                <div class="mt-index-realend">...</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="nano-pane">
+                        <div class="nano-slider" style="height: 179px; transform: translate(0px, 0px);"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="js-more-moment" data-cur_page="0"></div>
+        </div>
+        <div class="placeholder"></div>
+
+        <!--最新热帖部分结束1-->
+        <div class="ad-wrap">
+            <div class="ad-title">广告</div>
+        </div>
+        <div class="placeholder"></div>
+        <!--传言-->
+        <!--传言部分开始-->
+        <div id="rumor_center"></div>
+        <div class="box-moder moder-rumors-list">
+            <h3>需求广场</h3>
+            <span class="span-mark"></span>
+            <div class="big2-pic pull-right">
+                <a href="#" class="back-img" target="_blank">
+                    <img class="lazy" src="sy-img/105108838520.jpg" alt="">
+                </a>
+                <a href="https://chuanyan.huxiu.com/rumor/detail/684.html" target="_blank">
+                    <div class="big2-pic-content">
+                        <h2 class="t-h1">最新需求一</h2>
+                    </div>
+                    <div class="clear"></div>
+                </a>
+            </div>
+            <div class="clear"></div>
+            <ul class="rumorlist">
+                <li>
+                    <div class="icon-clock"><img src="images/clock.jpg"/></div>
+                    <p class="rumor-time">09月07日  08:00</p><!--插入时间-->
+                    <p class="rumor-detail"><a href="#" target="_blank">美媒报道称，苹果和亚马逊正在竞购“007”詹姆斯·邦德品牌的特...</a></p>
+                </li>
+            </ul>
+            <div class="rumor-more">
+                <p><a href="#" target="_blank">详情>></a></p>
+            </div>
+            <!--24小时不展示此按钮-->
+            <div class="rumor-brunt-box">
+                <button type="button" class="btn-info btn-sm"> 置顶</button>  <!--直接置顶操作-->
+                &nbsp &nbsp<button class="btn-gray btn-sm">  修改</button><!--点击后跳转-->
+                &nbsp &nbsp <button class="btn-success btn-sm">加精</button><!--点击后加入精华帖-->
+                &nbsp &nbsp<button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+            </div>
+        </div>
+        <div class="placeholder"></div>
+        <!--需求广场结束-->
+        <div class="ad-wrap">
+            <div class="ad-title">广告</div>
+        </div>
+        <div class="placeholder"></div>
+        <div class="box-moder moder-project-list">
+            <h3>互动广场</h3>
+            <span class="pull-right project-more"><a href="#" class="transition" target="_blank">全部</a></span>
+            <span class="span-mark"></span>
+            <ul>
+                <li>
+                    <div class="project-pic">
+                        <img src="sy-img/1503478306719861.png">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <a href="#" class="transition" target="_blank">用户一</a>
+                        </div>
+                        <p>擅长领域</p>
+                        <button class="btn-cp-info right">向他询问</button>
+                    </div>
+                </li>
+                <li>
+                    <div class="project-pic">
+                        <img src="sy-img/1503478306719861.png">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-title">
+                            <a href="#" class="transition" target="_blank">用户二</a>
+                        </div>
+                        <p>擅长领域</p>
+                        <button class="btn-cp-info right">向他询问</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="placeholder"></div>
+        <div class="box-moder hot-article">
+            <h3>精华帖</h3>
+            <span class="span-mark"></span>
+            <ul>
+                <li>
+                    <div class="hot-article-img">
+                        <a href="#" target="_blank" title="华谊：老了，还花心">
+                            <img src="sy-img/105108838520.jpg">
+                        </a>
+                    </div>
+                    <a href="#" class="transition" target="_blank">华谊：老了，还花心</a>
+                    <br><button type="button" class="btn-info btn-sm"> 置顶</button>  <!--直接置顶操作-->
+                     &nbsp <button class="btn-gray btn-sm">  修改</button><!--点击后跳转-->
+                    &nbsp &nbsp  <button class="btn-danger btn-sm">删除</button><!--点击后直接删除-->
+                </li>
+
+
+            </ul>
+        </div>
+        <div class="placeholder"></div>
+    </div>
+</div>
+
+<!--底部栏-->
+<footer class="footer">
+    <div class="modal-backdrop fade in js-modal-backdrop"></div>
+    <div class="container copy-right">
+        <div class="footer-tag-list">
+            <a href="#" target="_blank" class="transition">关于我们</a>
+            <a href="#" target="_blank" class="transition">加入我们</a>
+            <a href="#" target="_blank" class="transition">合作伙伴</a>
+            <a href="#" target="_blank" class="transition">广告及服务</a>
+            <a href="#" target="_blank" class="transition">常见问题解答</a>
+            <a href="#" target="_blank" class="transition">防网络诈骗专题</a>
+        </div>
+        <span>Copyright © <a href="#">BBS论坛</a> <a href="#" target="_blank">京ICP备12013432号-1</a>
+            &nbsp;<a href="#" target="_blank"><i class="i-wj"></i>京公网安备 11010102001402号</a>&nbsp;&nbsp;&nbsp;<em class="bull-right">本站由</em><i class="icon-aliyun" style="width: 70px;background-size: 100%;left: 7px;"></i><em class="bull-em">提供计算与安全服务</em>
+        </span>
+        <div class="footer-icon-list pull-right">
+            <ul class="Qr-codee">
+                <a><li class="Qr-code-footer">
+                    <div class="app-qrcode"><img src="images/weixin_erweima.png"></div>
+                    <i class="icon icon-footer icon-footer-wx"></i>
+                </li>
+                </a>
+                <a><li class="Qr-code-footer">
+                    <div class="app-qrcode"><img src="images/app_erweima.png"></div>
+                    <i class="icon icon-footer icon-footer-ios"></i>
+                </li>
+                </a>
+                <a><li class="Qr-code-footer">
+                    <div class="app-qrcode"><img src="images/app_erweima.png"></div>
+                    <i class="icon icon-footer icon-footer-android"></i>
+                </li>
+                </a>
+                <a href="#" target="_blank" title="英文版">
+                    <li><i class="icon icon-footer icon-footer-inter"></i></li>
+                </a>
+                <a href="#" target="_blank" title="RSS订阅中心">
+                    <li><i class="icon icon-footer icon-footer-rss"></i></li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div id="moquu_wxin" class="moquu_wxin"><a href="javascript:void(0)"><div class="moquu_wxinh"></div></a></div>
+    <div id="moquu_wshare" class="moquu_wshare"><a href="javascript:void(0)"><div class="moquu_wshareh"></div></a></div>
+</footer>
+<script type="text/javascript" src="js/mouse.js" th:src="@{/js/mouse.js}"></script>
+
+</body>
+
+</html>
